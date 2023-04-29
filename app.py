@@ -9,9 +9,14 @@ app = Flask(__name__)
 
 model = YOLO("./runs/models/best.pt")
 
-@app.route('/')
+@app.route('/',methods = ['GET', 'POST'])
 def hello_world():
-   return redirect(url_for('inputImage'))
+   imagefile = request.files['image']
+   filename = werkzeug.utils.secure_filename(imagefile.filename)
+   print("\nReceived image File name : " + imagefile.filename)
+   imagefile.save("./images/"+filename)
+   return redirect(url_for('detect'))
+   # return redirect(url_for('inputImage'))
 
 
 @app.route("/detect")
@@ -32,11 +37,11 @@ def detect():
    print("------------RESULT ENDS HERE---------------")
    return output_result
 
-@app.route('/inputImage',methods = ['GET', 'POST'])
-def inputImage():
-   imagefile = request.files['image']
-   filename = werkzeug.utils.secure_filename(imagefile.filename)
-   print("\nReceived image File name : " + imagefile.filename)
-   imagefile.save("./images/"+filename)
-   return redirect(url_for('detect'))
+# @app.route('/inputImage',methods = ['GET', 'POST'])
+# def inputImage():
+#    imagefile = request.files['image']
+#    filename = werkzeug.utils.secure_filename(imagefile.filename)
+#    print("\nReceived image File name : " + imagefile.filename)
+#    imagefile.save("./images/"+filename)
+#    return redirect(url_for('detect'))
    
