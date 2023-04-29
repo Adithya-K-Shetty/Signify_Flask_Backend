@@ -11,7 +11,7 @@ model = YOLO("./runs/models/best.pt")
 
 @app.route('/')
 def hello_world():
-   return "Bye World"
+   return redirect(url_for('inputImage'))
 
 
 @app.route("/detect")
