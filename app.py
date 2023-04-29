@@ -11,7 +11,7 @@ model = YOLO("./runs/models/best.pt")
 
 @app.route('/')
 def hello_world():
-   return "Hello World"
+   return "Bye World"
 
 
 @app.route("/detect")
