@@ -14,7 +14,7 @@ def hello_world():
    imagefile = request.files['image']
    filename = werkzeug.utils.secure_filename(imagefile.filename)
    print("\nReceived image File name : " + imagefile.filename)
-   imagefile.save("./images/"+filename)
+   imagefile.save("./runs/images/"+filename)
    return redirect(url_for('detect'))
    # return redirect(url_for('inputImage'))
 
@@ -22,10 +22,10 @@ def hello_world():
 @app.route("/detect")
 def detect():
    output_result = ""
-   img = cv2.imread('./images/androidFlask.jpg')
-   cv2.imwrite('./images/output.jpeg', img)
+   img = cv2.imread('./runs/images/androidFlask.jpg')
+   cv2.imwrite('./runs/images/output.jpeg', img)
 
-   image = Image.open('./images/output.jpeg')
+   image = Image.open('./runs/images/output.jpeg')
    detections = model.predict(image,conf=0.25,hide_labels=True,hide_conf=True,save=True)
    print("------------RESULT STARTS FROM HERE---------------")
    for r in detections:
