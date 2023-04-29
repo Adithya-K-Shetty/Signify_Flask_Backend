@@ -1,5 +1,6 @@
 services:
-  - name: web
+  - name: my-service
+    type: web
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app -w 4 -t 600 --bind 0.0.0.0:$PORT
     env:
@@ -10,5 +11,6 @@ services:
       sizeGB: 10
     routes:
       - path: /inputImage
+        type: rewrite
         command: gunicorn app:app -w 4 -t 600 --bind 0.0.0.0:$PORT
         port: 5000
