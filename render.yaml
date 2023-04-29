@@ -1,0 +1,14 @@
+services:
+  - name: web
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app -w 4 -t 600 --bind 0.0.0.0:$PORT
+    env:
+      MODEL_PATH: /runs/models/best.pt
+      IMAGE_UPLOADS: /runs/images
+    persistentDisk:
+      mountPath: /runs
+      sizeGB: 10
+    routes:
+      - path: /inputImage
+        command: gunicorn app:app -w 4 -t 600 --bind 0.0.0.0:$PORT
+        port: 5000

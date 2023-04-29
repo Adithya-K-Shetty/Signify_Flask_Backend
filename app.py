@@ -7,7 +7,7 @@ import werkzeug
 
 app = Flask(__name__)
 
-model = YOLO("./models/best.pt")
+model = YOLO("./runs/models/best.pt")
 
 @app.route('/')
 def hello_world():
@@ -17,10 +17,10 @@ def hello_world():
 @app.route("/detect")
 def detect():
    output_result = ""
-   img = cv2.imread('./androidFlask.jpg')
-   cv2.imwrite('output.jpeg', img)
+   img = cv2.imread('./images/androidFlask.jpg')
+   cv2.imwrite('./images/output.jpeg', img)
 
-   image = Image.open('output.jpeg')
+   image = Image.open('./images/output.jpeg')
    detections = model.predict(image,conf=0.25,hide_labels=True,hide_conf=True,save=True)
    print("------------RESULT STARTS FROM HERE---------------")
    for r in detections:
@@ -37,9 +37,6 @@ def inputImage():
    imagefile = request.files['image']
    filename = werkzeug.utils.secure_filename(imagefile.filename)
    print("\nReceived image File name : " + imagefile.filename)
-   imagefile.save(filename)
+   imagefile.save("./images/"+filename)
    return redirect(url_for('detect'))
    
-
-if __name__ == '__main__':
-   app.run(host="0.0.0.0", port=5000, debug = True)
