@@ -10,7 +10,7 @@ psutil==5.9.5
 torchvision==0.14.1
 PyYAML==6.0
 tqdm==4.65.0
-matplotlib==3.7.1
+matplotlib==3.5.3
 seaborn==0.12.2
 ultralytics==8.0.84
 Werkzeug==2.2.3
